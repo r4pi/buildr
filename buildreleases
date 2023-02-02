@@ -1,0 +1,148 @@
+#!/usr/bin/env python
+"""Tool to build R from source"""
+import os
+import sys
+import argparse
+import tarfile
+from shutil import rmtree
+
+# print(os.getcwd())
+
+def validate_version(version_no):
+    """Ensure the input version number is appropriate"""
+    pass
+
+POS = 0
+def spinner(*args):
+    """Prints and updates a download activity indicator"""
+    global POS
+    states = ["\\", "\\", "\\", "\\", "|", "|", "|", "|", "/", "/", "/", "/", "-", "-", "-", "-"]
+    if POS >= len(states):
+        POS = 0
+    sys.stdout.write("Downloading: {}\r".format(states[POS]))
+    sys.stdout.flush()
+    POS = POS + 1
+
+
+def downloadR(version_no):
+    """Download R source from CRAN"""
+    ver_components = version_no.split(".")
+    ver_major = ver_components[0]
+    url = "https://cran.r-project.org/src/base/R-{}/R-{}.tar.gz".format(ver_major, version_no)
+    outfile = "R-{}.tar.gz".format(version_no)
+    if sys.version_info[0] > 2:
+        import urllib.request
+        urllib.request.urlretrieve(url, outfile, spinner)
+    else:
+        import urllib
+        urllib.urlretrieve(url, outfile, spinner)
+    print("Downloading: complete")
+
+def untargz(version_no):
+    """Unpack the R source code"""
+    filename = "R-{}.tar.gz".format(version_no)
+    tar = tarfile.open(filename)
+    tar.extractall()
+    tar.close()
+
+
+def configure(version_no):
+    """Configure the build of the R source"""
+    prefix = "--prefix=/opt/R/release"
+    config_cmd = [
+        "./configure",
+        prefix,
+        "--enable-R-shlib",
+        "--with-blas",
+        "--with-lapack",
+        "--enable-memory-profiling",
+        "--with-tcltk",
+        "--with-x"
+        ]
+    cmd = " ".join(config_cmd)
+    source_path = "R-{}".format(version_no)
+    os.chdir(source_path)
+    os.system(cmd)
+    os.chdir("..")
+
+def make_binary(version_no):
+    """Run 'make' against the configured source"""
+    source_path = "R-{}".format(version_no)
+    os.chdir(source_path)
+    os.system("make")
+    os.chdir("..")
+
+def make_install(version_no):
+    """Run make install against the binary distribution that we built"""
+    source_path = "R-{}".format(version_no)
+    os.chdir(source_path)
+    os.system("sudo make install")
+    os.chdir("..")
+
+def app_version():
+    """Print version number and quit"""
+    version_no = "0.1"
+    print("Version: {}".format(version_no))
+    sys.exit(0)
+
+def cleanup(version_no):
+    """cleans up source artifacts"""
+    filename = "R-{}.tar.gz".format(version_no)
+    dirname = "R-{}".format(version_no)
+    try:
+        os.remove(filename)
+    except OSError:
+        print("File not found: {}".format(filename))
+    try:
+        rmtree(dirname)
+    except OSError:
+        print("Directory not found: {}".format(dirname))
+
+
+
+if __name__ == "__main__":
+    P = argparse.ArgumentParser(description='Download, build and install R from source')
+    P.add_argument('r_version', type=str, help='an R version number to download, build and install')
+    P.add_argument('-d', dest='download', action='store_true', help="download the source")
+    P.add_argument('-u', dest='unpack', action='store_true', help="unpack the source")
+    P.add_argument('-c', dest='configure', action='store_true', help="configure the build")
+    P.add_argument('-m', dest='make', action='store_true', help="build the binaries")
+    P.add_argument('-i', dest='install', action='store_true', help="install the binaries")
+    P.add_argument('-a', dest='all', action='store_true', help="all actions except install")
+    P.add_argument('-v', dest='show_app_ver', action='store_true', help="print version and quit")
+    P.add_argument('--clean', dest='clean', action='store_true', help="cleanup downloaded source artifacts")
+
+
+
+    ARGS = P.parse_args()
+
+    # print(ARGS)
+
+    if ARGS.show_app_ver:
+        app_version()
+
+    if ARGS.download:
+        downloadR(ARGS.r_version)
+
+    if ARGS.unpack:
+        untargz(ARGS.r_version)
+
+    if ARGS.configure:
+        configure(ARGS.r_version)
+
+    if ARGS.make:
+        make_binary(ARGS.r_version)
+
+    if ARGS.install:
+        make_install(ARGS.r_version)
+
+    if ARGS.all:
+        downloadR(ARGS.r_version)
+        untargz(ARGS.r_version)
+        configure(ARGS.r_version)
+        make_binary(ARGS.r_version)
+
+    if ARGS.clean:
+        cleanup(ARGS.r_version)
+
+
