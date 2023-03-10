@@ -1,1 +1,3 @@
 R-[0-9].*
+packager/src-release/opt/R/*
+packager/src-version/opt/R/*
