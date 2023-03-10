@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=R (R4Pi build)
+Comment=R software environment for statistical computing
+Icon=/usr/share/pixmaps/r4pi-logo-128.png
+Exec=/opt/R/release/bin/R
+Terminal=true
+Categories=Development;Science;Math
