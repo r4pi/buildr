@@ -14,7 +14,7 @@ fpm \
   -s dir \
   -t deb \
   -v ${R_VERSION} \
-  --iteration 1 \
+  --iteration 2 \
   -n r-release \
   --vendor "r4pi.org" \
   --deb-priority "optional" \
