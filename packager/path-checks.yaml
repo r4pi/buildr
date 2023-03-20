@@ -1,0 +1,30 @@
+./src-release/usr/bin/R:
+  perms: 755
+  user: root
+  group: root
+  type: link
+
+
+./src-release/usr/bin/Rscript:
+  perms: 755
+  user: root
+  group: root
+  type: link
+
+./src-release/opt/R/release:
+  perms: 755
+  user: root
+  group: root
+  type: dir
+
+./src-release/opt/R/release/bin/R:
+  perms: 755
+  user: root
+  group: root
+  type: file
+
+./src-release/opt/R/release/lib/R/etc/Rprofile.site:
+  perms: 644
+  user: root
+  group: root
+  type: file

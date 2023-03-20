@@ -1,8 +1,29 @@
 #!/bin/bash
 
+set -euo pipefail
+
+R_VERSION=${1:-default}
+ITERATION=${2:-default}
+
+function usage() {
+    echo "Usage: $(basename $0) R_VERSION ITERATION"
+    exit 1
+}
+
+
+if [ "${R_VERSION}" == "default" ]; then
+    usage
+fi
+
+if [ "${ITERATION}" == "default" ]; then
+    usage
+fi
+
 if [[ ! -d /tmp/output/raspbian-bullseye ]]; then
   mkdir -p /tmp/output/raspbian-bullseye
 fi
+
+./path-checks.py
 
 # R 3.x requires PCRE1
 pcre_lib='libpcre2-dev'
