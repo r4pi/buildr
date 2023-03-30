@@ -57,7 +57,8 @@ def configure(version_no):
         "--with-lapack",
         "--enable-memory-profiling",
         "--with-tcltk",
-        "--with-x"
+        "--with-x",
+        "CXXPICFLAGS=-fPIC",
         ]
     cmd = " ".join(config_cmd)
     source_path = "R-{}".format(version_no)
