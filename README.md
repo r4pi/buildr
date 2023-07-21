@@ -50,7 +50,13 @@ As of some time around May 2023 32bit Rasbian started using a 64bit kernel.
 
 This means `uname -m` and `arch` return 'aarch64' instead of 'armv7l'.
 
-This breaks a ton of the build process so it's important to force the use of
+You can check which version of the OS you're using with:
+
+```
+getconf LONG_BIT
+```
+
+This change breaks a ton of the build process so it's important to force the use of
 the 32 bit kernel to ensure successful builds.
 
 Add the following to `/boot/config.txt`:
