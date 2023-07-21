@@ -62,3 +62,11 @@ arm_64bit=0
 
 and then reboot.
 
+
+## Installing fpm
+
+The project uses fpm to package the build for release.
+
+Building fpm for debian bullseye requires a very specific set of packages so 
+there's an install script in `install_fpm.sh`.
+
