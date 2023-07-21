@@ -1,26 +1,5 @@
 # Tools for building R
 
-## ToDo
-
-* Where is the devel source kept?
-    - https://cran.r-project.org/src/base-prerelease/
-* Add Makefile
-* add options to buildr for the R release version to build - release, old-release, devel
-
-
-## Steps for building a standalone version
-
-1. run the `buildr` script
-
-```
-./buildr -a <version>
-```
-
-2. Install your new build
-
-```
-sudo ./buildr -i <version>
-```
 
 ## Steps for building a release version
 
@@ -42,7 +21,44 @@ sudo rm -rf /opt/R/release
 sudo ./buildrelase -i <version>
 ```
 
-4. Apply R4Pi patches
+4. As root, copy the install tree into the src-release directory
 
-5. Package
+5. Apply R4Pi patches
+
+6. Package
+
+
+
+## Steps for building a standalone version
+
+1. run the `buildr` script
+
+```
+./buildr -a <version>
+```
+
+2. Install your new build
+
+```
+sudo ./buildr -i <version>
+```
+
+
+## IMPORTANT NOTE FOR 32BIT RASBIAN
+
+As of some time around May 2023 32bit Rasbian started using a 64bit kernel.
+
+This means `uname -m` and `arch` return 'aarch64' instead of 'armv7l'.
+
+This breaks a ton of the build process so it's important to force the use of
+the 32 bit kernel to ensure successful builds.
+
+Add the following to `/boot/config.txt`:
+
+```
+# Fix to prevent loading the (now default) 64 bit kernel
+arm_64bit=0
+```
+
+and then reboot.
 
