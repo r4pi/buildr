@@ -2,12 +2,6 @@
 
 set -euo pipefail
 
-source /etc/os-release
-if [ "$VERSION_CODENAME" != "bullseye" ]; then
-    echo "Error: wrong OS version. Check and try again"
-    exit 100
-fi
-
 R_VERSION=${1:-default}
 ITERATION=${2:-default}
 
@@ -31,12 +25,6 @@ if [[ ! -d $OUTPUT_PATH ]]; then
 fi
 
 ./path-checks.py
-
-# R 3.x requires PCRE1
-pcre_lib='libpcre2-dev'
-if [[ "${R_VERSION}" =~ ^3 ]]; then
-  pcre_lib='libpcre3-dev'
-fi
 
 fpm \
   -s dir \
@@ -68,15 +56,15 @@ fpm \
   -d libjpeg62-turbo \
   -d liblapack-dev \
   -d liblzma-dev \
-  -d libopenblas-base \
+  -d libopenblas0 \
   -d libpango-1.0-0 \
   -d libpangocairo-1.0-0 \
   -d libpaper-utils \
-  -d ${pcre_lib} \
+  -d libpcre2-dev \
   -d libpng16-16 \
   -d libreadline8 \
   -d libtcl8.6 \
-  -d libtiff5 \
+  -d libtiff6 \
   -d libtk8.6 \
   -d libx11-6 \
   -d libxt6 \
