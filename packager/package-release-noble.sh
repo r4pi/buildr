@@ -59,7 +59,7 @@ fpm \
   -d libglib2.0-0 \
   -d libgomp1 \
   -d libicu-dev \
-  -d libjpeg62-turbo \
+  -d libjpeg-turbo8 \
   -d liblapack-dev \
   -d liblzma-dev \
   -d libopenblas0 \
