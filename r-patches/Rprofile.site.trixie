@@ -1,0 +1,4 @@
+# set a CRAN mirror
+local({r <- getOption("repos")
+       r["CRAN"] <- "https://pkgs.r4pi.org/trixie"
+       options(repos=r)})
