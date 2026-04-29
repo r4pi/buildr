@@ -1,5 +1,12 @@
 # Packaging an R release
 
+Before starting confirm the OS of the target system with:
+
+```
+cat /etc/os-release
+```
+
+
 Step 1 - remove any existing package artefacts
 
 ```
