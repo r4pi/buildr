@@ -1,7 +1,7 @@
 # Tools for building R
 
 
-## Steps for building a release version
+## Steps for building a standalone version
 
 1. Remove `/opt/R/release`
 
@@ -12,14 +12,18 @@ sudo rm -rf /opt/R/release
 2. run the `buildr` script
 
 ```
-./buildrelase -a <version>
+./buildr -a <version>
 ```
 
 3. Install your new build
 
 ```
-sudo ./buildrelase -i <version>
+sudo ./buildr -i <version>
 ```
+
+** Switch to the `packager` directory and follow the instructions there.
+
+The following is a summary:
 
 4. As root, copy the install tree into the src-release directory
 
@@ -28,20 +32,34 @@ sudo ./buildrelase -i <version>
 6. Package
 
 
+## Steps for building a release version
 
-## Steps for building a standalone version
+R4Pi does not currently build versioned releases, preferring instead to provide
+a single up-to-date release. These instructions are provided for information only.
 
-1. run the `buildr` script
-
-```
-./buildr -a <version>
-```
-
-2. Install your new build
+1. Remove `/opt/R/<version>`
 
 ```
-sudo ./buildr -i <version>
+sudo rm -rf /opt/R/<version>
 ```
+
+2. run the `buildrelease` script
+
+```
+./buildrelease -a <version>
+```
+
+3. Install your new build
+
+```
+sudo ./buildrelease -i <version>
+```
+
+4. As root, copy the install tree into the src-release directory
+
+5. Apply R4Pi patches
+
+6. Package
 
 
 ## IMPORTANT NOTE FOR 32BIT RASBIAN

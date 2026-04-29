@@ -30,7 +30,7 @@ if [[ ! -d $OUTPUT_PATH ]]; then
   mkdir -p $OUTPUT_PATH
 fi
 
-./path-checks.py
+./path_checks.py
 
 # R 3.x requires PCRE1
 pcre_lib='libpcre2-dev'

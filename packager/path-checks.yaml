@@ -4,7 +4,6 @@
   group: root
   type: link
 
-
 ./src-release/usr/bin/Rscript:
   perms: 755
   user: root
@@ -28,3 +27,4 @@
   user: root
   group: root
   type: file
+

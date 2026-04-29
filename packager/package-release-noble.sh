@@ -30,7 +30,7 @@ if [[ ! -d $OUTPUT_PATH ]]; then
   mkdir -p $OUTPUT_PATH
 fi
 
-./path-checks.py
+./path_checks.py
 
 fpm \
   -s dir \

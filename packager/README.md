@@ -9,7 +9,7 @@ sudo rm -r ./src-release/opt/R/release
 Step 2 - Copy in the new build
 
 ```
-sudo cp -r /opt/R/release ./src/opt/R/release
+sudo cp -r /opt/R/release ./src-release/opt/R/release
 ```
 
 Step 3 - Copy in any patches
