@@ -3,6 +3,7 @@
 Path checking tools for ensuring files and folders meet permission and ownership expectations
 """
 
+import argparse
 import grp
 import logging
 import os
@@ -10,9 +11,6 @@ import pwd
 import sys
 import yaml
 
-logging.basicConfig(
-    format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
-)
 
 # set initial error state
 ERRORS = False
@@ -114,9 +112,33 @@ def main():
     """
     main
     """
+    PARSER = argparse.ArgumentParser(
+            prog='path_check',
+            description='Validates file paths according to a documented spec',
+            epilog=''
+            )
+    PARSER.add_argument("-p", "--path", help="path to config file",
+                    default="path-checks.yaml")
+    PARSER.add_argument("-q", "--quiet", help="display minimal output",
+                    action="store_true")
+
+    ARGV = PARSER.parse_args()
+
+
+    if (ARGV.quiet):
+        logging.basicConfig(
+            format="%(asctime)s [%(levelname)s] %(message)s", level=logging.ERROR
+        )
+    else:
+        logging.basicConfig(
+            format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
+        )
+
+
+
     logging.info("Starting checks...")
     global_errors = []
-    with open("path-checks.yaml", "r", encoding="utf8") as file:
+    with open(ARGV.path, "r", encoding="utf8") as file:
         paths = yaml.safe_load(file)
 
     for path, config in paths.items():
