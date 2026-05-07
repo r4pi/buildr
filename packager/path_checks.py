@@ -113,19 +113,20 @@ def main():
     main
     """
     PARSER = argparse.ArgumentParser(
-            prog='path_check',
-            description='Validates file paths according to a documented spec',
-            epilog=''
-            )
-    PARSER.add_argument("-p", "--path", help="path to config file",
-                    default="path-checks.yaml")
-    PARSER.add_argument("-q", "--quiet", help="display minimal output",
-                    action="store_true")
+        prog="path_check",
+        description="Validates file paths according to a documented spec",
+        epilog="",
+    )
+    PARSER.add_argument(
+        "-p", "--path", help="path to config file", default="path-checks.yaml"
+    )
+    PARSER.add_argument(
+        "-q", "--quiet", help="display minimal output", action="store_true"
+    )
 
     ARGV = PARSER.parse_args()
 
-
-    if (ARGV.quiet):
+    if ARGV.quiet:
         logging.basicConfig(
             format="%(asctime)s [%(levelname)s] %(message)s", level=logging.ERROR
         )
@@ -133,8 +134,6 @@ def main():
         logging.basicConfig(
             format="%(asctime)s [%(levelname)s] %(message)s", level=logging.INFO
         )
-
-
 
     logging.info("Starting checks...")
     global_errors = []
